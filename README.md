@@ -29,7 +29,7 @@ _In this application I make my users happy or should I say users that love anima
 * _Note: as at the launch of this Application there are no bugs but this is not the finished product as I will be adding more features later on. If anyone comes in contact with a bug, be sure to hit me up on social media or email me @emzzyoluwole@gmail.com. WATCH OUT FOR VERSION 1.2.0 WHICH IS COMING SOON. Also in version 1.2.0, I would be making use of some thing called fetch to make my API CALLS, this is just to figure out some of the other ways to make API calls. TO add to this, there is full separation of concern(logic) in this version. As I said in version 1.0.0 that in other higher versions of the DINO Ipsum application there would be a complete separation of logics(business and userInterace logics) into their respective files_
 
 ## WebLink
-https://emzzy241.github.io/DINO-Ipsum-API-1.0.0/
+https://emzzy241.github.io/DINO-Ipsum-Api-1.1.0/
 
 ## License
 Licensed under the GNU General Public License
