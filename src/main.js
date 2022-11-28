@@ -11,6 +11,9 @@ import "./css/styles.css";
 import jsImage from "./assets/images/js-badge.svg";
 import dinoImage from "./assets/images/dno1.png";
 
+// importing a function I wrote in my business logic file to my userInterface logic file
+import {DinoService} from "./dino-service.js";
+
 
 $(document).ready(() =>{
     
@@ -39,49 +42,28 @@ $(document).ready(() =>{
         let noOfDinosaursNames = $("#numWords").val();
         $("#numWords").val("");
 
-        // after taking in my values, its time to make my api call
+        // a variable that will work with all the codes I wrote in my business logic file
+        let myPromise = DinoService.findSomeDinos(noOfDinosaursParagraph, noOfDinosaursNames);
 
-        // reinstantiating a new xmlhttp request
-        let myRequest = new XMLHttpRequest();
+        // a promise.then() method that will help be executed what to do when my promise is either resolved or rejected after I've gotten my response
 
-        // my api call endpoint
-        let myEndpointUrl = `https://dinoipsum.com/api/?format=json&words=${noOfDinosaursNames}&paragraphs=${noOfDinosaursParagraph}`;
+        myPromise.then((myResponseSuccess) =>{
+            // if my request was a success this lines of code handles that 
 
+            // parsing the json so JavaScript sees it as an object and not json
+            const dinoBody = JSON.parse(myResponseSuccess);
 
-        // time to work with api requests
-        myRequest.onreadystatechange = function (){
-            // telling javascript when my api call response would be ready
-            if(this.readyState === 4 && this.status === 200){
-                // parsing the json response gotten because I did set my apicall to give a response in json format
-                // also the .parse() method is capable of turning javascript object notation(JSON) into javascript objects
-                const dinoResponse = JSON.parse(this.responseText);
+            // the great thing about the .then() method is that I am able to do things both when my response is a success and when my response failed
 
-
-                // calling a function that gets dinos for users to get executed when my request was successful
-                // also while caling this function, I passed in my dinoResponse variable storing the converted javascript object[from json to javascript objects all thanks to JSON.parse();]
-                getDinos(dinoResponse);
-            }
-        }
-        // final steps of my call; opening a get request, with the variable I stored my Endpoint in and lastly a boolean that will determine whether I want my request opened or not
+            $(".dOne").text(`${dinoBody[0][0]}`);
+            $(".dTwo").text(`${dinoBody[0][1]}`);
+            $(".dThree").text(`${dinoBody[0][2]}`);
+            $(".dFour").text(`${dinoBody[0][3]}`);
 
 
-        myRequest.open("GET", myEndpointUrl, true);
-        myRequest.send();
-
-        // time to write the function I called earlier on that would get executed when my apiCall request was successful
-
-        function getDinos(getMeDinosaurs){
-            // getting four dinosaur names for my users
-            $(".dOne").text(`${getMeDinosaurs[0][0]}`);
-            
-            $(".dTwo").text(`${getMeDinosaurs[0][1]}`);
-            
-            $(".dThree").text(`${getMeDinosaurs[0][2]}`);
-            
-            $(".dFour").text(`${getMeDinosaurs[0][3]}`);
-            
-            
-        }
+        }, function (myResponseFailed){
+            $(".error").text(`Sorry There was an error processing your request: ${myResponseFailed} Please try again`);
+        });
 
     });
 
